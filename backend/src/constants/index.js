@@ -1,0 +1,1 @@
+export const NEEDS_ATTENTION_HOURS = 24;
