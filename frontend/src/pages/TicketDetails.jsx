@@ -9,6 +9,7 @@ import {
   Clock,
   AlertCircle,
   FileText,
+  Package,
 } from 'lucide-react';
 import { getTicket, updateTicket } from '../services/api';
 import { StatusBadge } from '../components/tickets/StatusBadge';
@@ -102,12 +103,18 @@ export function TicketDetails() {
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2.5 flex-wrap">
               <span className="font-mono text-sm font-bold text-slate-800 bg-slate-100 px-2.5 py-0.5 rounded-lg border border-slate-200">
                 {ticket.ticket_id}
               </span>
               <PriorityBadge priority={ticket.priority} />
               <StatusBadge status={ticket.status} />
+              {ticket.order_reference && (
+                <span className="font-mono text-xs font-semibold text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-lg border border-indigo-200 flex items-center gap-1 shadow-2xs">
+                  <Package className="w-3 h-3 text-indigo-500" />
+                  <span>{ticket.order_reference}</span>
+                </span>
+              )}
             </div>
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight mt-1.5">
               {ticket.subject}
@@ -174,6 +181,18 @@ export function TicketDetails() {
             <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">
               Ticket Details
             </h3>
+
+            {ticket.order_reference && (
+              <div className="flex items-center justify-between text-xs py-1 border-b border-slate-100">
+                <span className="text-slate-500 font-medium flex items-center gap-1.5">
+                  <Package className="w-3.5 h-3.5 text-slate-400" />
+                  Order Reference
+                </span>
+                <span className="font-mono font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                  {ticket.order_reference}
+                </span>
+              </div>
+            )}
 
             <div className="flex items-center justify-between text-xs py-1 border-b border-slate-100">
               <span className="text-slate-500 font-medium flex items-center gap-1.5">

@@ -11,6 +11,7 @@ const sampleTickets = [
     description: 'Customer completed the UPI payment via PhonePe, but the order status still shows payment pending and no confirmation SMS was received.',
     status: 'In Progress',
     priority: 'High',
+    order_reference: 'ORD-2026-92834',
     created_at: new Date(Date.now() - 36 * 60 * 60 * 1000), // 36 hours ago (1d old)
     notes: [
       {
@@ -31,6 +32,7 @@ const sampleTickets = [
     description: 'Customer reports that the ceramic cookware set order was cancelled three days ago but the refund has not yet appeared in the account.',
     status: 'Open',
     priority: 'High',
+    order_reference: 'ORD-2026-10482',
     created_at: new Date(Date.now() - 48 * 60 * 60 * 1000), // 2 days ago (2d old)
     notes: [
       {
@@ -47,6 +49,7 @@ const sampleTickets = [
     description: 'Customer is unable to log in via corporate SSO portal. Error code 500 received after OTP verification step.',
     status: 'Open',
     priority: 'High',
+    order_reference: null,
     created_at: new Date(Date.now() - 28 * 60 * 60 * 1000), // 28 hours ago (1d old)
     notes: [],
   },
@@ -55,9 +58,10 @@ const sampleTickets = [
     customer_name: 'Sneha Kulkarni',
     customer_email: 'sneha.kulkarni@gmail.com',
     subject: 'Order delivery delayed',
-    description: 'Order #88412 was scheduled for delivery on Monday. Tracking indicates package has been delayed at the regional distribution center.',
+    description: 'Order was scheduled for delivery on Monday. Tracking indicates package has been delayed at the regional distribution center.',
     status: 'In Progress',
     priority: 'Medium',
+    order_reference: 'ORD-2026-88412',
     created_at: new Date(Date.now() - 26 * 60 * 60 * 1000), // 26 hours ago (26h old)
     notes: [
       {
@@ -71,9 +75,10 @@ const sampleTickets = [
     customer_name: 'Aditya Deshmukh',
     customer_email: 'aditya.deshmukh@venture.co.in',
     subject: 'Wrong item received',
-    description: 'Received mechanical wireless keyboard with blue tactile switches instead of red linear switches ordered in invoice #INV-491.',
+    description: 'Received mechanical wireless keyboard with blue tactile switches instead of red linear switches ordered in invoice.',
     status: 'Open',
     priority: 'Medium',
+    order_reference: 'ORD-2026-49102',
     created_at: new Date(Date.now() - 18 * 60 * 60 * 1000), // 18 hours ago
     notes: [],
   },
@@ -85,6 +90,7 @@ const sampleTickets = [
     description: 'Our accounts department requires a revised B2B tax invoice with our company GSTIN number 27AAAAA0000A1Z5 included on header.',
     status: 'In Progress',
     priority: 'Low',
+    order_reference: 'ORD-2026-98212',
     created_at: new Date(Date.now() - 32 * 60 * 60 * 1000), // 32 hours ago (1d old)
     notes: [
       {
@@ -101,6 +107,7 @@ const sampleTickets = [
     description: 'Auto-debit for monthly Pro workspace subscription failed with bank error code E-MANDATE_FAIL.',
     status: 'Closed',
     priority: 'Medium',
+    order_reference: null,
     created_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
     notes: [
       {
@@ -117,6 +124,7 @@ const sampleTickets = [
     description: 'Requested password reset 3 times over the last hour. Checked spam and promotions folders, but no reset email arrives.',
     status: 'Open',
     priority: 'High',
+    order_reference: null,
     created_at: new Date(Date.now() - 14 * 60 * 60 * 1000), // 14 hours ago
     notes: [],
   },
@@ -125,9 +133,10 @@ const sampleTickets = [
     customer_name: 'Akash Shah',
     customer_email: 'akash.shah@gmail.com',
     subject: 'COD order cancellation',
-    description: 'Customer requests cancellation of COD shipment #77129 as they will be traveling out of town during delivery window.',
+    description: 'Customer requests cancellation of COD shipment as they will be traveling out of town during delivery window.',
     status: 'Closed',
     priority: 'Low',
+    order_reference: 'ORD-2026-77129',
     created_at: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000),
     notes: [
       {
@@ -144,6 +153,7 @@ const sampleTickets = [
     description: 'Customer entered old flat number during checkout. Needs delivery address updated to Flat 402, Green Meadows, Pune.',
     status: 'In Progress',
     priority: 'Medium',
+    order_reference: 'ORD-2026-61920',
     created_at: new Date(Date.now() - 8 * 60 * 60 * 1000),
     notes: [
       {
@@ -160,6 +170,7 @@ const sampleTickets = [
     description: 'Delivery associate handed over parcel at security gate yesterday, but app still reflects status as In Transit.',
     status: 'Closed',
     priority: 'Low',
+    order_reference: 'ORD-2026-55102',
     created_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
     notes: [
       {
@@ -176,6 +187,7 @@ const sampleTickets = [
     description: 'Festive coupon code SAVE20 indicates invalid discount error at checkout despite cart value exceeding minimum ₹2,000 threshold.',
     status: 'Open',
     priority: 'Medium',
+    order_reference: null,
     created_at: new Date(Date.now() - 4 * 60 * 60 * 1000),
     notes: [],
   },
@@ -187,6 +199,7 @@ const sampleTickets = [
     description: 'External courier box had puncture marks and internal tempered glass screen protector was cracked on arrival.',
     status: 'In Progress',
     priority: 'High',
+    order_reference: 'ORD-2026-44192',
     created_at: new Date(Date.now() - 34 * 60 * 60 * 1000), // 34 hours ago (1d old)
     notes: [
       {
@@ -203,6 +216,7 @@ const sampleTickets = [
     description: 'Delivery driver marked customer unavailable without dialing phone or ringing the doorbell.',
     status: 'Open',
     priority: 'Medium',
+    order_reference: 'ORD-2026-38104',
     created_at: new Date(Date.now() - 10 * 60 * 60 * 1000),
     notes: [],
   },
@@ -211,9 +225,10 @@ const sampleTickets = [
     customer_name: 'Omkar Patil',
     customer_email: 'omkar.patil@logistics.in',
     subject: 'Duplicate payment deducted',
-    description: 'Bank statement reflects two consecutive deductions of ₹2,499 for single order #66182. Requesting reversal of excess debit.',
+    description: 'Bank statement reflects two consecutive deductions of ₹2,499 for single order. Requesting reversal of excess debit.',
     status: 'In Progress',
     priority: 'High',
+    order_reference: 'ORD-2026-66182',
     created_at: new Date(Date.now() - 40 * 60 * 60 * 1000), // 40 hours ago (1d old)
     notes: [
       {
@@ -230,13 +245,14 @@ const sampleTickets = [
     description: 'Transferred ₹1,500 via IMPS to wallet balance; amount debited from HDFC account but in-app balance remains unchanged.',
     status: 'Open',
     priority: 'High',
+    order_reference: null,
     created_at: new Date(Date.now() - 2 * 60 * 60 * 1000),
     notes: [],
   },
 ];
 
 async function main() {
-  console.log('Seeding SupportDesk database with Indian-centric demo data...');
+  console.log('Seeding SupportDesk database with Indian-centric demo data and order references...');
 
   // Clear existing notes and tickets to ensure clean idempotent seed
   await prisma.note.deleteMany();
@@ -252,7 +268,7 @@ async function main() {
         },
       },
     });
-    console.log(`Created ticket: ${ticket.ticket_id} - ${ticket.subject} (${ticket.customer_name})`);
+    console.log(`Created ticket: ${ticket.ticket_id} - ${ticket.subject} (Order: ${ticket.order_reference || 'N/A'})`);
   }
 
   console.log(`Successfully seeded ${sampleTickets.length} Indian-centric tickets with activity notes.`);

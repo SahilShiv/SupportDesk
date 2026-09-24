@@ -385,6 +385,9 @@ npm test
 - `TEST 18`: Verification that dashboard stats calculate directly from database records
 - `TEST 19`: HTTP 404 response on non-existent ticket IDs
 - `TEST 20`: Health check endpoint (`/api/health`)
+- `TEST 21`: Dashboard stats include `needsAttention` count and ticket list
+- `TEST 22`: Filtering tickets by `needsAttention=true` (overdue tickets > 24 hours)
+- `TEST 23`: Case-insensitive partial search by `order_reference` (`ORD-2026-10482`)
 
 ---
 
@@ -416,33 +419,48 @@ npm test
 
 ---
 
-## Bonus Feature
+## Operational Features & Extensions
 
-### Priority Management
+### 1. Priority Management
 Priorities:
 - `Low`
 - `Medium` (Default)
 - `High`
 
 **Design & Product Rationale:**
-> "Priority was added as a focused enhancement because customer support teams need a simple way to distinguish urgency. It was implemented as a field on the existing ticket record rather than introducing additional tables or unnecessary complexity."
+> Priority was added as a focused enhancement because customer support teams need a simple way to distinguish urgency. It was implemented as an indexed column on the existing ticket record rather than introducing additional tables or unnecessary complexity.
 
-Frontline support agents can prioritize tickets directly during ticket creation or elevate urgency during ticket triage. The dashboard prominently highlights the High Priority queue to ensure team visibility on critical customer blockers.
+### 2. "Needs Attention" SLA Queue
+- **Purpose**: Identifies unresolved tickets waiting longer than 24 hours without resolution.
+- **Implementation**: Calculated dynamically from existing database attributes (`created_at <= now - 24h` AND `status != 'Closed'`). Defined by configurable constant `NEEDS_ATTENTION_HOURS = 24`.
+- **UI**: Embedded as a dedicated, actionable section on the Dashboard displaying relative ages (`2d old`, `26h old`, `1d old`) with direct links to ticket details and `/tickets?needsAttention=true`.
+
+### 3. Lightweight Order Reference
+- **Purpose**: Correlates support requests with customer order numbers (e.g. `ORD-2026-10482`).
+- **Implementation**: Stored as an optional, indexed string column (`order_reference`) on the Ticket table.
+- **Searchable**: Search queries for order numbers match instantly alongside customer name, email, and issue description.
 
 ---
 
-## Engineering Decisions
+## Design Decisions & Architectural Answers
 
-1. **Why React + Vite?**
-   Vite provides near-instant Hot Module Replacement (HMR) and optimized Rollup production builds. React provides an expressive component model ideal for building modular interfaces with isolated state.
-2. **Why Node.js + Express?**
-   Express offers a lightweight, unopinionated routing layer that adheres strictly to standard REST conventions without unnecessary boilerplate.
-3. **Why PostgreSQL + Prisma ORM?**
-   PostgreSQL provides ACID compliance, strong relational integrity, and robust indexing. Prisma delivers type-safe query generation, migration tools, and protection against SQL injection attacks.
-4. **Why Two Intentionally Simple Tables?**
-   Customer support ticketing at its core represents tickets and notes. A clean 1-to-many relationship prevents premature overengineering while cleanly handling arbitrary activity logs.
-5. **Why Concurrency-Safe ID Generation?**
-   Rather than exposing opaque database internal primary keys, SupportDesk formats sequential identifiers (`TKT-001`). Using atomic max sequence queries ensures IDs remain predictable and user-friendly.
+1. **Why Express?**
+   Express offers a minimal, fast, unopinionated routing layer that adheres strictly to standard REST conventions without unnecessary framework abstraction or magic. It is battle-tested, easily containerized, and provides standard middleware support for CORS, Helmet security headers, Morgan logging, and Zod validation.
+
+2. **Why PostgreSQL?**
+   PostgreSQL provides robust ACID transactions, rock-solid data durability, relational integrity, and high-performance B-tree indexing on frequently filtered columns (`status`, `priority`, `created_at`, `order_reference`). It handles concurrent reads and writes reliably.
+
+3. **Why the Two-Table Model (`tickets` + `notes`)?**
+   Customer support ticketing fundamentally centers around an issue and its evolving conversation history. A clean 1-to-many relationship between tickets and append-only activity notes provides complete audit history without complex joins, performance overhead, or schema bloat.
+
+4. **Why Priority?**
+   Customer inquiries are not equal in business impact. An outright payment deduction failure or broken authentication blocker requires immediate frontline triage compared to general inquiries. Adding `priority` enables high-priority queueing and clear operational focus.
+
+5. **Why Needs Attention?**
+   Support tickets can easily slip through the cracks when volume spikes. Rather than requiring complex scheduling workers or background queue infrastructure, SupportDesk calculates overdue tickets dynamically from `created_at` and `status`. It gives agents an immediate SLA radar directly on the dashboard.
+
+6. **Why Order Reference rather than a full Order Management Module?**
+   Customer support requests frequently reference an ecommerce transaction (e.g. "order #ORD-2026-10482"). However, a support CRM should never attempt to duplicate an ERP, warehouse management system, or full ecommerce backend. An optional, indexed `order_reference` field provides full searchability and context without creating unnecessary tables, redundant models, or boundary violations.
 
 ---
 
@@ -451,39 +469,27 @@ Frontline support agents can prioritize tickets directly during ticket creation 
 | Challenge | Solution |
 | :--- | :--- |
 | **Concurrent ID Collisions** | Implemented transactional querying of the highest existing sequential numeric ID before insertion, with unique database constraints to guarantee uniqueness. |
-| **Search Across Multiple Fields** | Implemented Prisma's `contains` operator with `mode: 'insensitive'` across `ticket_id`, `customer_name`, `customer_email`, `subject`, and `description`. |
+| **Search Across Multiple Fields** | Implemented Prisma's `contains` operator with `mode: 'insensitive'` across `ticket_id`, `customer_name`, `customer_email`, `subject`, `description`, and `order_reference`. |
 | **Debounced Search State** | Created a custom `useDebounce` hook that syncs with URL search parameters, ensuring bookmarkable and shareable search URLs without excessive API requests. |
 | **Preserving Note History** | Structured notes as an independent table linked by foreign key, so updates append records without modifying existing notes. |
 | **SPA Route 404s on Refresh** | Added `vercel.json` rewrites directing all deep URLs (`/tickets/TKT-001`, `/dashboard`) to `/index.html`. |
 
 ---
 
-## Future Improvements
-
-- **Email Webhooks**: Ingest incoming customer emails via SendGrid/Postmark inbound parse webhooks.
-- **Agent Assignment**: Add an `agents` table to assign tickets to specific support engineers.
-- **Customer Satisfaction (CSAT)**: Send automated resolution surveys upon marking tickets as `Closed`.
-- **Canned Responses**: Pre-written response macros for common repetitive customer questions.
-
----
-
-## Screenshots
-
-- **Support Dashboard**: Real-time KPI statistics cards, high priority queue banner, and recent tickets table.
-- **Ticket Directory**: Debounced multi-field search input, status & priority filter bars, and responsive table.
-- **Create Ticket**: Form with client & server validation, character count indicator, and priority selector.
-- **Ticket Details**: Customer info card, issue details, inline update panel, and chronological notes timeline.
-
----
-
-## Demo
+## Demo & Local Reset
 
 To run the live interactive demo locally:
 ```bash
-git clone https://github.com/your-username/supportdesk.git
-cd supportdesk
+git clone https://github.com/SahilShiv/SupportDesk.git
+cd SupportDesk
 npm install
 npm run seed
 npm run dev
 ```
 Navigate to [http://localhost:5173](http://localhost:5173).
+
+To reset demo data anytime to a clean slate:
+```bash
+npm run seed
+```
+

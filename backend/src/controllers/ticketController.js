@@ -15,6 +15,7 @@ export async function createTicket(req, res, next) {
         subject: createdTicket.subject,
         status: createdTicket.status,
         priority: createdTicket.priority,
+        order_reference: createdTicket.order_reference,
       },
       201
     );

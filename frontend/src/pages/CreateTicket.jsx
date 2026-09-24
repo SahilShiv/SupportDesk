@@ -33,6 +33,12 @@ const ticketFormSchema = z.object({
     .min(5, 'Issue description must be at least 5 characters')
     .max(5000, 'Description cannot exceed 5000 characters'),
   priority: z.enum(['Low', 'Medium', 'High']).default('Medium'),
+  order_reference: z
+    .string()
+    .trim()
+    .max(50, 'Order reference cannot exceed 50 characters')
+    .optional()
+    .or(z.literal('')),
 });
 
 export function CreateTicket() {
@@ -53,6 +59,7 @@ export function CreateTicket() {
       subject: '',
       description: '',
       priority: 'Medium',
+      order_reference: '',
     },
   });
 
@@ -212,6 +219,27 @@ export function CreateTicket() {
             </select>
             <p className="mt-1 text-xs text-slate-400">
               Default is Medium. Choose High for critical blockers.
+            </p>
+          </div>
+
+          {/* Order Reference (Optional) */}
+          <div>
+            <label
+              htmlFor="order_reference"
+              className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5"
+            >
+              Order Reference <span className="text-slate-400 font-normal normal-case">(Optional)</span>
+            </label>
+            <input
+              id="order_reference"
+              type="text"
+              placeholder="e.g. ORD-2026-10482"
+              disabled={createMutation.isPending}
+              {...register('order_reference')}
+              className="w-full py-2.5 px-3.5 bg-white border border-slate-200 hover:border-slate-300 rounded-xl text-sm text-slate-900 placeholder-slate-400 shadow-subtle transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500"
+            />
+            <p className="mt-1 text-xs text-slate-400">
+              Leave blank if this inquiry is not related to a specific order.
             </p>
           </div>
 

@@ -284,3 +284,13 @@ test('TEST 22: GET /api/tickets?needsAttention=true returns unresolved tickets o
   assert.ok(body.data.every((t) => t.status !== 'Closed'));
 });
 
+test('TEST 23: GET /api/tickets?search=ORD-2026-10482 finds ticket by order reference', async () => {
+  const res = await fetch(`${baseUrl}/tickets?search=ORD-2026-10482`);
+  assert.equal(res.status, 200);
+  const body = await res.json();
+  assert.equal(body.success, true);
+  assert.ok(body.data.length > 0);
+  assert.equal(body.data[0].order_reference, 'ORD-2026-10482');
+});
+
+

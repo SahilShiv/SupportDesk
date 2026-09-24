@@ -15,6 +15,7 @@ export async function createTicket(data) {
         description: data.description.trim(),
         status: data.status || 'Open',
         priority: data.priority || 'Medium',
+        order_reference: data.order_reference?.trim() || null,
       },
     });
 
@@ -49,6 +50,7 @@ export async function getTickets({ page = 1, limit = 10, search, status, priorit
       { customer_email: { contains: term, mode: 'insensitive' } },
       { subject: { contains: term, mode: 'insensitive' } },
       { description: { contains: term, mode: 'insensitive' } },
+      { order_reference: { contains: term, mode: 'insensitive' } },
     ];
   }
 
@@ -103,7 +105,7 @@ export async function getTicketByTicketId(ticketId) {
   return ticket;
 }
 
-export async function updateTicket(ticketId, { status, priority, notes }) {
+export async function updateTicket(ticketId, { status, priority, order_reference, notes }) {
   return await prisma.$transaction(async (tx) => {
     const existing = await tx.ticket.findUnique({
       where: { ticket_id: ticketId },
@@ -119,6 +121,9 @@ export async function updateTicket(ticketId, { status, priority, notes }) {
     }
     if (priority !== undefined && priority !== null) {
       updateData.priority = priority;
+    }
+    if (order_reference !== undefined) {
+      updateData.order_reference = order_reference?.trim() || null;
     }
 
     // Always update updated_at if anything changes or a note is added
@@ -169,6 +174,7 @@ export async function getDashboardStats() {
         subject: true,
         priority: true,
         status: true,
+        order_reference: true,
         created_at: true,
       },
     }),

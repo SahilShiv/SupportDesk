@@ -80,9 +80,16 @@ export function TicketTable({
             </div>
 
             <div>
-              <h4 className="text-sm font-semibold text-slate-900 line-clamp-1">
-                {ticket.subject}
-              </h4>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <h4 className="text-sm font-semibold text-slate-900 line-clamp-1">
+                  {ticket.subject}
+                </h4>
+                {ticket.order_reference && (
+                  <span className="font-mono text-[10px] font-semibold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100">
+                    {ticket.order_reference}
+                  </span>
+                )}
+              </div>
               <p
                 className="text-xs text-slate-500 line-clamp-2 mt-0.5"
                 title={ticket.description}
@@ -154,8 +161,15 @@ export function TicketTable({
                   </div>
                 </td>
                 <td className="py-3.5 px-5 max-w-sm">
-                  <div className="font-medium text-slate-900 truncate">
-                    {ticket.subject}
+                  <div className="flex items-center gap-2">
+                    <span className="font-medium text-slate-900 truncate">
+                      {ticket.subject}
+                    </span>
+                    {ticket.order_reference && (
+                      <span className="font-mono text-[10px] font-semibold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-100 shrink-0">
+                        {ticket.order_reference}
+                      </span>
+                    )}
                   </div>
                   <div
                     className="text-xs text-slate-400 truncate mt-0.5"

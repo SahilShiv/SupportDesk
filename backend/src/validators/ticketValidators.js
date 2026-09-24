@@ -27,6 +27,12 @@ export const createTicketSchema = z.object({
     })
     .default('Medium')
     .optional(),
+  order_reference: z
+    .string()
+    .trim()
+    .max(50, 'Order reference cannot exceed 50 characters')
+    .optional()
+    .nullable(),
 });
 
 export const updateTicketSchema = z.object({
@@ -40,6 +46,12 @@ export const updateTicketSchema = z.object({
       errorMap: () => ({ message: 'Priority must be Low, Medium, or High' }),
     })
     .optional(),
+  order_reference: z
+    .string()
+    .trim()
+    .max(50, 'Order reference cannot exceed 50 characters')
+    .optional()
+    .nullable(),
   notes: z
     .string()
     .trim()

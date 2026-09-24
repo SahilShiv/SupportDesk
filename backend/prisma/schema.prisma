@@ -14,15 +14,17 @@ model Ticket {
   customer_email String
   subject        String
   description    String    @db.Text
-  status         String    @default("Open")
-  priority       String    @default("Medium")
-  created_at     DateTime  @default(now())
-  updated_at     DateTime  @updatedAt
-  notes          Note[]
+  status          String    @default("Open")
+  priority        String    @default("Medium")
+  order_reference String?
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  notes           Note[]
 
   @@index([status])
   @@index([priority])
   @@index([customer_email])
+  @@index([order_reference])
   @@index([created_at])
   @@map("tickets")
 }
