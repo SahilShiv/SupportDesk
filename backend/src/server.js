@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import { fileURLToPath } from 'url';
 import { config } from './config/env.js';
 import prisma from './config/db.js';
+import { ensureDatabaseReady } from './config/dbInit.js';
 import apiRouter from './routes/index.js';
 import { errorHandler, notFoundHandler } from './middleware/errorMiddleware.js';
 
@@ -44,6 +45,13 @@ app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 if (config.nodeEnv !== 'test') {
   app.use(morgan(config.nodeEnv === 'production' ? 'combined' : 'dev'));
 }
+
+app.use(async (req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    await ensureDatabaseReady();
+  }
+  next();
+});
 
 app.use('/api', apiRouter);
 
