@@ -12,7 +12,7 @@ const sampleTickets = [
     status: 'In Progress',
     priority: 'High',
     order_reference: 'ORD-2026-92834',
-    created_at: new Date(Date.now() - 36 * 60 * 60 * 1000), // 36 hours ago (1d old)
+    created_at: new Date(Date.now() - 36 * 60 * 60 * 1000),
     notes: [
       {
         note_text: 'Customer provided UPI reference ID 49201948201. Reached out to payment gateway operations team.',
@@ -33,7 +33,7 @@ const sampleTickets = [
     status: 'Open',
     priority: 'High',
     order_reference: 'ORD-2026-10482',
-    created_at: new Date(Date.now() - 48 * 60 * 60 * 1000), // 2 days ago (2d old)
+    created_at: new Date(Date.now() - 48 * 60 * 60 * 1000),
     notes: [
       {
         note_text: 'Bank refund ARN generated. Re-confirming processing window with merchant acquiring bank.',
@@ -50,7 +50,7 @@ const sampleTickets = [
     status: 'Open',
     priority: 'High',
     order_reference: null,
-    created_at: new Date(Date.now() - 28 * 60 * 60 * 1000), // 28 hours ago (1d old)
+    created_at: new Date(Date.now() - 28 * 60 * 60 * 1000),
     notes: [],
   },
   {
@@ -62,7 +62,7 @@ const sampleTickets = [
     status: 'In Progress',
     priority: 'Medium',
     order_reference: 'ORD-2026-88412',
-    created_at: new Date(Date.now() - 26 * 60 * 60 * 1000), // 26 hours ago (26h old)
+    created_at: new Date(Date.now() - 26 * 60 * 60 * 1000),
     notes: [
       {
         note_text: 'Escalated to BlueDart logistics hub lead for priority dispatch.',
@@ -79,7 +79,7 @@ const sampleTickets = [
     status: 'Open',
     priority: 'Medium',
     order_reference: 'ORD-2026-49102',
-    created_at: new Date(Date.now() - 18 * 60 * 60 * 1000), // 18 hours ago
+    created_at: new Date(Date.now() - 18 * 60 * 60 * 1000),
     notes: [],
   },
   {
@@ -91,7 +91,7 @@ const sampleTickets = [
     status: 'In Progress',
     priority: 'Low',
     order_reference: 'ORD-2026-98212',
-    created_at: new Date(Date.now() - 32 * 60 * 60 * 1000), // 32 hours ago (1d old)
+    created_at: new Date(Date.now() - 32 * 60 * 60 * 1000),
     notes: [
       {
         note_text: 'Verified company GST certificate on GST portal. Forwarded to billing desk.',
@@ -125,7 +125,7 @@ const sampleTickets = [
     status: 'Open',
     priority: 'High',
     order_reference: null,
-    created_at: new Date(Date.now() - 14 * 60 * 60 * 1000), // 14 hours ago
+    created_at: new Date(Date.now() - 14 * 60 * 60 * 1000),
     notes: [],
   },
   {
@@ -200,7 +200,7 @@ const sampleTickets = [
     status: 'In Progress',
     priority: 'High',
     order_reference: 'ORD-2026-44192',
-    created_at: new Date(Date.now() - 34 * 60 * 60 * 1000), // 34 hours ago (1d old)
+    created_at: new Date(Date.now() - 34 * 60 * 60 * 1000),
     notes: [
       {
         note_text: 'Damage images verified by QC team. Replacement unit queued for dispatch.',
@@ -229,7 +229,7 @@ const sampleTickets = [
     status: 'In Progress',
     priority: 'High',
     order_reference: 'ORD-2026-66182',
-    created_at: new Date(Date.now() - 40 * 60 * 60 * 1000), // 40 hours ago (1d old)
+    created_at: new Date(Date.now() - 40 * 60 * 60 * 1000),
     notes: [
       {
         note_text: 'Duplicate transaction reference checked on merchant gateway. Initiated refund for secondary charge.',
@@ -253,8 +253,6 @@ const sampleTickets = [
 
 async function main() {
   console.log('Seeding SupportDesk database with Indian-centric demo data and order references...');
-
-  // Clear existing notes and tickets to ensure clean idempotent seed
   await prisma.note.deleteMany();
   await prisma.ticket.deleteMany();
 

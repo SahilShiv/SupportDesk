@@ -9,7 +9,6 @@ export function NeedsAttentionSection({ tickets = [], loading = false, totalCoun
 
   return (
     <div className="bg-white rounded-card border border-amber-200/90 shadow-card overflow-hidden">
-      {/* Section Header */}
       <div className="p-5 border-b border-amber-100 bg-amber-50/40 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 border border-amber-200">
@@ -43,7 +42,6 @@ export function NeedsAttentionSection({ tickets = [], loading = false, totalCoun
         )}
       </div>
 
-      {/* Content */}
       {loading ? (
         <div className="p-6 space-y-3">
           <div className="h-10 bg-slate-100 rounded-lg animate-pulse" />
@@ -96,7 +94,6 @@ export function NeedsAttentionSection({ tickets = [], loading = false, totalCoun
             </div>
           ))}
 
-          {/* Bottom View All Link */}
           <div className="p-3 bg-slate-50/60 text-right px-5">
             <Link
               to="/tickets?needsAttention=true"

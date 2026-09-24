@@ -15,7 +15,6 @@ import { RecentTicketsTable } from '../components/dashboard/RecentTicketsTable';
 import { StatCardSkeleton } from '../components/ui/Skeleton';
 
 export function Dashboard() {
-  // Query 1: Dashboard statistics
   const {
     data: statsData,
     isLoading: statsLoading,
@@ -26,7 +25,6 @@ export function Dashboard() {
     refetchInterval: 30000,
   });
 
-  // Query 2: Recent 5 tickets
   const {
     data: recentTicketsData,
     isLoading: recentLoading,
@@ -49,7 +47,6 @@ export function Dashboard() {
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-in fade-in duration-200">
-      {/* 1. Page Header (No duplicate Create Ticket CTA - primary CTA is in global Header) */}
       <div className="pb-2 border-b border-slate-200/60">
         <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
           Support Dashboard
@@ -59,7 +56,6 @@ export function Dashboard() {
         </p>
       </div>
 
-      {/* Error state if backend is down */}
       {statsError && (
         <div className="p-4 bg-rose-50 border border-rose-200 rounded-xl text-sm text-rose-700 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -69,7 +65,6 @@ export function Dashboard() {
         </div>
       )}
 
-      {/* 2. Statistics Section */}
       <div className="space-y-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {statsLoading ? (
@@ -117,7 +112,6 @@ export function Dashboard() {
           )}
         </div>
 
-        {/* High Priority Queue indicator card */}
         <div className="bg-gradient-to-r from-rose-50 to-orange-50/50 rounded-card border border-rose-200/80 p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-subtle">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center shrink-0 border border-rose-200">
@@ -146,7 +140,6 @@ export function Dashboard() {
         </div>
       </div>
 
-      {/* 3. Needs Attention Section */}
       <section aria-labelledby="needs-attention-heading">
         <NeedsAttentionSection
           tickets={stats.needsAttentionTickets || []}
@@ -155,7 +148,6 @@ export function Dashboard() {
         />
       </section>
 
-      {/* 4. Recent Tickets Table Section */}
       <section aria-labelledby="recent-tickets-heading">
         <RecentTicketsTable
           tickets={recentTickets}

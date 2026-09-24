@@ -68,7 +68,6 @@ export function CreateTicket() {
   const createMutation = useMutation({
     mutationFn: createTicket,
     onSuccess: (response) => {
-      // Invalidate tickets list and dashboard stats
       queryClient.invalidateQueries({ queryKey: ['tickets'] });
       queryClient.invalidateQueries({ queryKey: ['dashboardStats'] });
       queryClient.invalidateQueries({ queryKey: ['recentTickets'] });
@@ -93,7 +92,6 @@ export function CreateTicket() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-6 animate-in fade-in duration-200">
-      {/* Back button */}
       <div>
         <Link
           to="/tickets"
@@ -104,7 +102,6 @@ export function CreateTicket() {
         </Link>
       </div>
 
-      {/* Main Form Card */}
       <div className="bg-white rounded-card border border-slate-200/90 shadow-card p-6 sm:p-8">
         <div className="pb-6 mb-6 border-b border-slate-100">
           <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
@@ -116,7 +113,6 @@ export function CreateTicket() {
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {/* Customer Name */}
           <div>
             <label
               htmlFor="customer_name"
@@ -143,7 +139,6 @@ export function CreateTicket() {
             )}
           </div>
 
-          {/* Customer Email */}
           <div>
             <label
               htmlFor="customer_email"
@@ -170,7 +165,6 @@ export function CreateTicket() {
             )}
           </div>
 
-          {/* Issue Title / Subject */}
           <div>
             <label
               htmlFor="subject"
@@ -197,7 +191,6 @@ export function CreateTicket() {
             )}
           </div>
 
-          {/* Priority Selection */}
           <div>
             <label
               htmlFor="priority"
@@ -222,7 +215,6 @@ export function CreateTicket() {
             </p>
           </div>
 
-          {/* Order Reference (Optional) */}
           <div>
             <label
               htmlFor="order_reference"
@@ -243,7 +235,6 @@ export function CreateTicket() {
             </p>
           </div>
 
-          {/* Issue Description */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
               <label
@@ -275,7 +266,6 @@ export function CreateTicket() {
             )}
           </div>
 
-          {/* Buttons */}
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
             <Link to="/tickets">
               <LoadingButton

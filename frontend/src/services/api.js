@@ -10,7 +10,6 @@ const apiClient = axios.create({
   timeout: 10000,
 });
 
-// Response interceptor to normalize error messages
 apiClient.interceptors.response.use(
   (response) => response.data,
   (error) => {
@@ -25,7 +24,6 @@ apiClient.interceptors.response.use(
 );
 
 export async function getTickets(params = {}) {
-  // Clean empty or undefined params
   const cleanParams = {};
   Object.keys(params).forEach((key) => {
     if (params[key] !== undefined && params[key] !== null && params[key] !== '') {

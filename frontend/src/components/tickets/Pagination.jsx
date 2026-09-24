@@ -24,7 +24,6 @@ export function Pagination({
   const startItem = (currentPage - 1) * pageSize + 1;
   const endItem = Math.min(currentPage * pageSize, totalItems);
 
-  // Generate page numbers to show
   const pageNumbers = [];
   const maxButtons = 5;
   let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
@@ -47,7 +46,6 @@ export function Pagination({
       </div>
 
       <div className="flex items-center gap-1.5">
-        {/* Previous Button */}
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage <= 1}
@@ -58,7 +56,6 @@ export function Pagination({
           <span>Previous</span>
         </button>
 
-        {/* Page Buttons */}
         <div className="flex items-center gap-1">
           {pageNumbers.map((page) => (
             <button
@@ -75,7 +72,6 @@ export function Pagination({
           ))}
         </div>
 
-        {/* Next Button */}
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage >= totalPages}

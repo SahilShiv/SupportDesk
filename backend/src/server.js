@@ -2,6 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
+import { fileURLToPath } from 'url';
 import { config } from './config/env.js';
 import prisma from './config/db.js';
 import apiRouter from './routes/index.js';
@@ -9,10 +10,8 @@ import { errorHandler, notFoundHandler } from './middleware/errorMiddleware.js';
 
 const app = express();
 
-// Security middleware
 app.use(helmet());
 
-// CORS configuration
 const allowedOrigins = [
   config.clientUrl,
   'http://localhost:5173',
@@ -23,7 +22,6 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps, curl, server-to-server)
       if (!origin) return callback(null, true);
       if (
         config.nodeEnv === 'development' ||
@@ -40,19 +38,15 @@ app.use(
   })
 );
 
-// Body parsing
 app.use(express.json({ limit: '1mb' }));
 app.use(express.urlencoded({ extended: true, limit: '1mb' }));
 
-// Logging
 if (config.nodeEnv !== 'test') {
   app.use(morgan(config.nodeEnv === 'production' ? 'combined' : 'dev'));
 }
 
-// Mount REST API
 app.use('/api', apiRouter);
 
-// Root route
 app.get('/', (req, res) => {
   res.json({
     name: 'SupportDesk API',
@@ -63,14 +57,10 @@ app.get('/', (req, res) => {
   });
 });
 
-// Error handling middleware
 app.use(notFoundHandler);
 app.use(errorHandler);
 
-// Server startup
 const PORT = config.port;
-
-import { fileURLToPath } from 'url';
 
 const isDirectRun =
   process.argv[1] &&
@@ -84,7 +74,6 @@ if (isDirectRun && process.env.NODE_ENV !== 'test') {
   });
 }
 
-// Graceful shutdown
 const shutdown = async () => {
   console.log('\n[SupportDesk API] Gracefully shutting down...');
   if (server) {

@@ -14,7 +14,6 @@ export function Tickets() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  // Read URL query parameters
   const urlSearch = searchParams.get('search') || '';
   const urlStatus = searchParams.get('status') || '';
   const urlPriority = searchParams.get('priority') || '';
@@ -22,11 +21,9 @@ export function Tickets() {
   const urlPage = parseInt(searchParams.get('page') || '1', 10);
   const urlNeedsAttention = searchParams.get('needsAttention') === 'true';
 
-  // Local state for debounced search
   const [searchInput, setSearchInput] = useState(urlSearch);
   const debouncedSearch = useDebounce(searchInput, 350);
 
-  // Synchronize debounced search into URL params
   useEffect(() => {
     const newParams = new URLSearchParams(searchParams);
     if (debouncedSearch) {
@@ -34,14 +31,12 @@ export function Tickets() {
     } else {
       newParams.delete('search');
     }
-    // Reset page to 1 on search change
     if (debouncedSearch !== urlSearch) {
       newParams.set('page', '1');
     }
     setSearchParams(newParams, { replace: true });
   }, [debouncedSearch]);
 
-  // Keep searchInput in sync if URL changes externally
   useEffect(() => {
     if (urlSearch !== searchInput && urlSearch !== debouncedSearch) {
       setSearchInput(urlSearch);
@@ -108,7 +103,6 @@ export function Tickets() {
       urlNeedsAttention
   );
 
-  // React Query fetching tickets with server-side search, filter, and pagination
   const { data, isLoading, isFetching } = useQuery({
     queryKey: [
       'tickets',
@@ -142,7 +136,6 @@ export function Tickets() {
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
-      {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-2 border-b border-slate-200/60">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900">
@@ -164,7 +157,6 @@ export function Tickets() {
         </Link>
       </div>
 
-      {/* Search and Filters Section */}
       <div className="space-y-3">
         <SearchBar
           value={searchInput}
@@ -188,7 +180,6 @@ export function Tickets() {
         />
       </div>
 
-      {/* Tickets Table / List */}
       <div className="space-y-0">
         <TicketTable
           tickets={tickets}
@@ -213,7 +204,6 @@ export function Tickets() {
           }
         />
 
-        {/* Server-side Pagination */}
         {!isLoading && tickets.length > 0 && (
           <Pagination
             currentPage={pagination.page}

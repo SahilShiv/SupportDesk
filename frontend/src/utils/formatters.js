@@ -1,8 +1,3 @@
-/**
- * Format date in Indian convention (e.g., "23 Sep 2026", "4:20 PM"):
- * - Uses Asia/Kolkata timezone
- * - Format: DD MMM YYYY (or Today/Yesterday for recent items)
- */
 export function formatDate(dateString, includeTime = false) {
   if (!dateString) return '—';
   const date = new Date(dateString);
@@ -10,7 +5,6 @@ export function formatDate(dateString, includeTime = false) {
 
   const timeZone = 'Asia/Kolkata';
 
-  // Format time in Asia/Kolkata
   const timeStr = date.toLocaleTimeString('en-IN', {
     hour: 'numeric',
     minute: '2-digit',
@@ -18,7 +12,6 @@ export function formatDate(dateString, includeTime = false) {
     timeZone,
   });
 
-  // Check today / yesterday in Kolkata time
   const now = new Date();
   const kolkataNowStr = now.toLocaleDateString('en-CA', { timeZone });
   const kolkataDateStr = date.toLocaleDateString('en-CA', { timeZone });
@@ -35,7 +28,6 @@ export function formatDate(dateString, includeTime = false) {
     return `Yesterday, ${timeStr}`;
   }
 
-  // Consistent DD MMM YYYY format (e.g. "23 Sep 2026")
   const day = date.toLocaleDateString('en-IN', { day: '2-digit', timeZone });
   const month = date.toLocaleDateString('en-IN', { month: 'short', timeZone });
   const year = date.toLocaleDateString('en-IN', { year: 'numeric', timeZone });
@@ -44,9 +36,6 @@ export function formatDate(dateString, includeTime = false) {
   return includeTime ? `${dateFormatted} • ${timeStr}` : dateFormatted;
 }
 
-/**
- * Format relative ticket age for Needs Attention (e.g. "2d old", "26h old", "1d old")
- */
 export function formatTicketAge(dateString) {
   if (!dateString) return '—';
   const date = new Date(dateString);
@@ -67,9 +56,6 @@ export function formatTicketAge(dateString) {
   return `${diffDays}d old`;
 }
 
-/**
- * Returns user initials from full name, e.g. "Rahul Sharma" -> "RS"
- */
 export function getInitials(name) {
   if (!name || typeof name !== 'string') return '?';
   const parts = name.trim().split(/\s+/);
@@ -77,9 +63,6 @@ export function getInitials(name) {
   return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
 }
 
-/**
- * Returns a consistent soft background color based on name string for avatar
- */
 export function getAvatarColor(name) {
   const colors = [
     'bg-indigo-100 text-indigo-700',

@@ -3,7 +3,6 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   ArrowLeft,
-  User,
   Mail,
   Calendar,
   Clock,
@@ -26,12 +25,10 @@ export function TicketDetails() {
   const queryClient = useQueryClient();
   const toast = useToast();
 
-  // Query ticket details
   const {
     data,
     isLoading,
     isError,
-    error,
   } = useQuery({
     queryKey: ['ticket', ticketId],
     queryFn: () => getTicket(ticketId),
@@ -40,11 +37,9 @@ export function TicketDetails() {
 
   const ticket = data?.data;
 
-  // Mutation to update ticket status/priority/notes
   const updateMutation = useMutation({
     mutationFn: (updateData) => updateTicket(ticketId, updateData),
-    onSuccess: (_, variables) => {
-      // Invalidate relevant queries
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['ticket', ticketId] });
       queryClient.invalidateQueries({ queryKey: ['tickets'] });
       queryClient.invalidateQueries({ queryKey: ['dashboardStats'] });
@@ -92,7 +87,6 @@ export function TicketDetails() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-6 animate-in fade-in duration-200">
-      {/* Back button and Meta Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/80">
         <div className="flex items-center gap-3">
           <Link
@@ -123,11 +117,8 @@ export function TicketDetails() {
         </div>
       </div>
 
-      {/* Main Grid: Left = Issue & Timeline; Right = Customer Card & Update Panel */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-        {/* Left Column (2 spans): Issue Details & Notes Timeline */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Issue Card */}
           <div className="bg-white rounded-card border border-slate-200/90 shadow-card p-6">
             <div className="flex items-center gap-2 text-xs font-bold text-slate-500 uppercase tracking-wider mb-4 pb-3 border-b border-slate-100">
               <FileText className="w-4 h-4 text-slate-400" />
@@ -138,20 +129,16 @@ export function TicketDetails() {
             </div>
           </div>
 
-          {/* Notes Timeline */}
           <NotesTimeline notes={ticket.notes || []} />
         </div>
 
-        {/* Right Column (1 span): Customer Card, Meta Info & Update Panel */}
         <div className="space-y-6">
-          {/* Action / Update Panel */}
           <UpdatePanel
             ticket={ticket}
             onSave={handleSave}
             isSaving={updateMutation.isPending}
           />
 
-          {/* Customer Card */}
           <div className="bg-white rounded-card border border-slate-200/90 shadow-card p-6">
             <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-4">
               Customer Information
@@ -176,7 +163,6 @@ export function TicketDetails() {
             </div>
           </div>
 
-          {/* Meta Information Card */}
           <div className="bg-white rounded-card border border-slate-200/90 shadow-card p-6 space-y-3">
             <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">
               Ticket Details

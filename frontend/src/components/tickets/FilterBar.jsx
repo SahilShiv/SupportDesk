@@ -17,7 +17,6 @@ export function FilterBar({
   return (
     <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
       <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-        {/* Status Filter */}
         <div className="flex items-center gap-1.5">
           <label htmlFor="status-filter" className="text-xs font-medium text-slate-500 hidden sm:inline">
             Status:
@@ -37,7 +36,6 @@ export function FilterBar({
           </select>
         </div>
 
-        {/* Priority Filter */}
         <div className="flex items-center gap-1.5">
           <label htmlFor="priority-filter" className="text-xs font-medium text-slate-500 hidden sm:inline">
             Priority:
@@ -57,7 +55,6 @@ export function FilterBar({
           </select>
         </div>
 
-        {/* Active Needs Attention chip */}
         {needsAttention && (
           <span className="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200 shadow-xs">
             <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
@@ -76,7 +73,6 @@ export function FilterBar({
           </span>
         )}
 
-        {/* Clear Filters Button */}
         {hasActiveFilters && (
           <button
             onClick={onResetFilters}
@@ -88,7 +84,6 @@ export function FilterBar({
         )}
       </div>
 
-      {/* Sort Select */}
       <div className="flex items-center gap-1.5 ml-auto">
         <ArrowUpDown className="w-3.5 h-3.5 text-slate-400" />
         <label htmlFor="sort-select" className="text-xs font-medium text-slate-500 hidden sm:inline">

@@ -126,7 +126,6 @@ export async function updateTicket(ticketId, { status, priority, order_reference
       updateData.order_reference = order_reference?.trim() || null;
     }
 
-    // Always update updated_at if anything changes or a note is added
     let updatedTicket = existing;
     if (Object.keys(updateData).length > 0 || (notes && notes.trim() !== '')) {
       updatedTicket = await tx.ticket.update({

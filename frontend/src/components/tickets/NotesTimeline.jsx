@@ -29,12 +29,10 @@ export function NotesTimeline({ notes = [] }) {
         <div className="relative pl-6 space-y-6 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200">
           {notes.map((note, index) => (
             <div key={note.id || index} className="relative group">
-              {/* Timeline marker */}
               <div className="absolute -left-6 top-0.5 w-4 h-4 rounded-full bg-white border-2 border-brand-500 flex items-center justify-center">
                 <div className="w-1.5 h-1.5 rounded-full bg-brand-600"></div>
               </div>
 
-              {/* Note Content */}
               <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-200/70 hover:border-slate-300 transition-colors">
                 <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
                   <div className="flex items-center gap-1.5 font-medium text-slate-700">

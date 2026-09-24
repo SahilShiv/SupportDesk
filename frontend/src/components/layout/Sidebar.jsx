@@ -4,9 +4,7 @@ import {
   LayoutDashboard,
   Ticket,
   Headphones,
-  CheckCircle2,
   X,
-  ExternalLink,
 } from 'lucide-react';
 
 export function Sidebar({ isOpen, onClose }) {
@@ -25,7 +23,6 @@ export function Sidebar({ isOpen, onClose }) {
 
   const content = (
     <div className="flex flex-col h-full bg-white border-r border-slate-200">
-      {/* Brand Header */}
       <div className="p-6 border-b border-slate-100 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 bg-brand-600 text-white rounded-xl flex items-center justify-center shadow-sm">
@@ -39,7 +36,6 @@ export function Sidebar({ isOpen, onClose }) {
           </div>
         </div>
 
-        {/* Mobile close button */}
         {onClose && (
           <button
             onClick={onClose}
@@ -51,7 +47,6 @@ export function Sidebar({ isOpen, onClose }) {
         )}
       </div>
 
-      {/* Main Navigation */}
       <nav className="flex-1 p-4 space-y-1">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -83,9 +78,7 @@ export function Sidebar({ isOpen, onClose }) {
         })}
       </nav>
 
-      {/* Sidebar Footer */}
       <div className="p-4 border-t border-slate-100 space-y-3">
-        {/* System Status */}
         <div className="px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-100">
           <div className="flex items-center justify-between text-xs mb-1">
             <span className="text-slate-500 font-medium">System Status</span>
@@ -102,7 +95,6 @@ export function Sidebar({ isOpen, onClose }) {
           </div>
         </div>
 
-        {/* User profile / Agent identity */}
         <div className="flex items-center gap-3 px-3.5 py-2 rounded-xl">
           <div className="w-8 h-8 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-semibold text-xs border border-brand-200">
             SS
@@ -122,12 +114,10 @@ export function Sidebar({ isOpen, onClose }) {
 
   return (
     <>
-      {/* Desktop static sidebar */}
       <aside className="hidden lg:block w-64 shrink-0 h-screen sticky top-0">
         {content}
       </aside>
 
-      {/* Mobile drawer overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm lg:hidden transition-opacity"
@@ -136,7 +126,6 @@ export function Sidebar({ isOpen, onClose }) {
         />
       )}
 
-      {/* Mobile slide-over drawer */}
       <div
         className={`fixed inset-y-0 left-0 z-50 w-72 transform transition-transform duration-200 ease-in-out lg:hidden shadow-2xl ${
           isOpen ? 'translate-x-0' : '-translate-x-full'

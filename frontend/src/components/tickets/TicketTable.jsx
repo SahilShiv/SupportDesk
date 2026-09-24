@@ -61,7 +61,6 @@ export function TicketTable({
 
   return (
     <div className="bg-white rounded-card border border-slate-200/90 shadow-card overflow-hidden">
-      {/* Mobile Card List (shown on screens < sm) */}
       <div className="sm:hidden divide-y divide-slate-100">
         {tickets.map((ticket) => (
           <div
@@ -117,7 +116,6 @@ export function TicketTable({
         ))}
       </div>
 
-      {/* Desktop / Tablet Table (shown on screens >= sm) */}
       <div className="hidden sm:block overflow-x-auto">
         <table className="w-full text-left text-sm text-slate-600">
           <thead className="bg-slate-50/75 text-xs font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-100">

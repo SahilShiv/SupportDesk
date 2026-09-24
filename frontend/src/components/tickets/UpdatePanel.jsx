@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Save, Check } from 'lucide-react';
+import { Save } from 'lucide-react';
 import { LoadingButton } from '../ui/LoadingButton';
 import { STATUS_OPTIONS, PRIORITY_OPTIONS } from '../../constants';
 
@@ -12,7 +12,6 @@ export function UpdatePanel({
   const [selectedPriority, setSelectedPriority] = useState(ticket?.priority || 'Medium');
   const [noteText, setNoteText] = useState('');
 
-  // Sync state if ticket changes
   useEffect(() => {
     if (ticket) {
       setSelectedStatus(ticket.status);
@@ -20,7 +19,6 @@ export function UpdatePanel({
     }
   }, [ticket?.ticket_id, ticket?.status, ticket?.priority]);
 
-  // Check if any change has been made
   const hasStatusChanged = selectedStatus !== ticket?.status;
   const hasPriorityChanged = selectedPriority !== ticket?.priority;
   const hasNoteAdded = noteText.trim().length > 0;
@@ -36,7 +34,6 @@ export function UpdatePanel({
     if (hasNoteAdded) payload.notes = noteText.trim();
 
     onSave(payload, () => {
-      // Clear note field on success
       setNoteText('');
     });
   };
@@ -48,7 +45,6 @@ export function UpdatePanel({
       </h3>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Status selection */}
         <div>
           <label htmlFor="update-status" className="block text-xs font-semibold text-slate-600 mb-1.5">
             Update Status
@@ -68,7 +64,6 @@ export function UpdatePanel({
           </select>
         </div>
 
-        {/* Priority selection */}
         <div>
           <label htmlFor="update-priority" className="block text-xs font-semibold text-slate-600 mb-1.5">
             Update Priority
@@ -88,7 +83,6 @@ export function UpdatePanel({
           </select>
         </div>
 
-        {/* Note textarea */}
         <div>
           <label htmlFor="update-note" className="block text-xs font-semibold text-slate-600 mb-1.5">
             Add Internal Note
@@ -104,7 +98,6 @@ export function UpdatePanel({
           />
         </div>
 
-        {/* Save button */}
         <LoadingButton
           type="submit"
           variant="primary"
