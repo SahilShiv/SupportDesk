@@ -1,16 +1,7 @@
 import { PrismaClient } from '@prisma/client';
-import './env.js';
+import { resolveDatabaseUrl } from './env.js';
 
-const databaseUrl =
-  process.env.DATABASE_URL ||
-  process.env.POSTGRES_PRISMA_URL ||
-  process.env.POSTGRES_URL ||
-  process.env.POSTGRES_URL_NON_POOLING ||
-  process.env.STORAGE_PRISMA_URL ||
-  process.env.STORAGE_URL ||
-  process.env.STORAGE_DATABASE_URL ||
-  process.env.NEON_DATABASE_URL ||
-  process.env.NEON_URL;
+const databaseUrl = resolveDatabaseUrl() || process.env.DATABASE_URL;
 
 if (databaseUrl && !process.env.DATABASE_URL) {
   process.env.DATABASE_URL = databaseUrl;
